@@ -14,6 +14,7 @@ static GLfloat alfa = 10;
 static GLfloat x = 0;
 static GLfloat y = 0;
 static GLfloat z = 0;
+static GLfloat rotatie_foc = 10;
 
 void myinit(void) {
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -23,7 +24,7 @@ void myinit(void) {
     glEnable(GL_LIGHTING); // Enable lighting
     glEnable(GL_LIGHT0); // Enable light source 0
 
-    GLfloat light_direction[] = { 0.0, 0.0, 1.0, 0.0 }; // Direction of the light source
+    GLfloat light_direction[] = { 1.0, 0.0, 0.0, 0.0 }; // Direction of the light source
     GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; // Diffuse color
     GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 }; // Specular color
 
@@ -110,7 +111,34 @@ void CALLBACK DeseneazaPicior()
         }
     glEnd();
 }
+void CALLBACK Foc(void) {
+    glColor3f(1.0, 0.5, 0.0);
+    
 
+    glPushMatrix();
+    glTranslatef(0.0, -100.0, 0.0);
+
+
+    glRotatef(270, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+    glRotatef(200, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+    glRotatef(30, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+    glRotatef(-100, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+
+    glPopMatrix();
+
+    glFlush();
+
+    glPopMatrix();
+    glPopMatrix();
+}
 void CALLBACK Racheta(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -126,15 +154,7 @@ void CALLBACK Racheta(void)
     glPushMatrix();
     glRotatef(alfa, 0, 1, 0);
 
-    /*
-   glPushMatrix();
-   glRotatef(270, 1, 1, 0);
-   Varf();
-   glPopMatrix();*/
-
     glPushMatrix();
-
-
 
     glPushMatrix();
     glColor3f(0.9, 0.9, 0.9);
@@ -170,10 +190,6 @@ void CALLBACK Racheta(void)
     glPopMatrix();
 
 
-
-
-
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3f(0.2, 0.2, 0.2);
     glPushMatrix();
     glTranslatef(20, -55.0, 0.0);
@@ -200,40 +216,15 @@ void CALLBACK Racheta(void)
     glPopMatrix();
     glPopMatrix();
 
-    ///////////////////////////////////   FOC //////////////////////////////////
+    glRotatef(rotatie_foc, 0, 1, 0);
+    rotatie_foc += 1000;
+    Foc();
 
-
-
-
-    glColor3f(1.0, 0.5, 0.0);
-
-
-    glPushMatrix();
-    glTranslatef(0.0, -100.0, 0.0);
-
-
-    glRotatef(270, 1, 0, 0);
-    auxSolidCone(20, 40);
-
-    glRotatef(200, 1, 0, 0);
-    auxSolidCone(20, 40);
-
-    glRotatef(30, 1, 0, 0);
-    auxSolidCone(20, 40);
-
-    glRotatef(-100, 1, 0, 0);
-    auxSolidCone(20, 40);
-
-
-
-    glPopMatrix();
-
-    glFlush();
-
-    glPopMatrix();
-    glPopMatrix();
+    
 
 }
+
+
 
 void CALLBACK Stele(void) {
 
