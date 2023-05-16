@@ -1,11 +1,10 @@
-/*
-Programul afiseaza un cub care se roteste
-*/
+
 #include "glos.h"
 #include <math.h>
 #include "gl.h"
 #include "glu.h"
 #include "glaux.h"
+#include "glut.h"
 
 void myinit(void);
 void CALLBACK display(void);
@@ -19,7 +18,7 @@ static GLfloat z = 0;
 void myinit(void) {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glColor3f(0.0, 1.0, 0.0);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
 }
 void CALLBACK MutaStanga()
 {
@@ -93,88 +92,165 @@ void CALLBACK DeseneazaPicior()
     glEnd();
 }
 
-void CALLBACK Baza()
+void CALLBACK Racheta(void)
 {
-    GLdouble eqn1[4] = { -1.0, 1.0, 1.0, 0.0 };
-    glClipPlane(GL_CLIP_PLANE0, eqn1);
-    glEnable(GL_CLIP_PLANE0);
-    auxSolidCone(25, 40);
-    glDisable(GL_CLIP_PLANE0);
-}
-
-void CALLBACK display(void)
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    //
-    
-    glRotatef(alfa, 1, 1, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix();
+    glRotatef(alfa, 0, 1, 0);
 
     /*
+   glPushMatrix();
+   glRotatef(270, 1, 1, 0);
+   Varf();
+   glPopMatrix();*/
+
     glPushMatrix();
-    glPushMatrix();
-    glColor3f(0.9, 0.0, 0.0);
-    //glTranslatef(-5, 40.0, 0.0);
-    glRotatef(270, 1, 0, 0);
-    auxSolidCone(25,40);
-    glPopMatrix();
+
+
 
     glPushMatrix();
     glColor3f(0.9, 0.9, 0.9);
-   // glTranslatef(-5, -60.0, 0.0);
+    glTranslatef(-5, 40.0, 0.0);
     auxSolidCylinder(25, 100);
     glPopMatrix();
 
     glPushMatrix();
-    glColor3f(0.6, 0.6, 0.6);
-     glTranslatef(0, -20.0, 0.0);
-    auxSolidSphere(10);
+    glColor3f(0.9, 0.0, 0.0);
+    glTranslatef(-5, 41.0, 0.0);
+    glRotatef(270, 1, 0, 0);
+    auxSolidCone(25, 40);
     glPopMatrix();
 
     glPushMatrix();
     glColor3f(0.2, 0.2, 0.2);
-    glTranslatef(0, -20.0, 0.0);
+    glTranslatef(0, 20.0, 22.0);
     auxSolidSphere(8);
     glPopMatrix();
 
     glPushMatrix();
     glColor3f(0.0, 0.0, 0.0);
-    glTranslatef(0, -20.0, 0.0);
+    glTranslatef(0, 20.0, 26.0);
     auxSolidSphere(6);
     glPopMatrix();
-   
-   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+
+
+    glPushMatrix();
+    glColor3f(0.6, 0.6, 0.6);
+    glTranslatef(0, 20.0, 20.0);
+    auxSolidSphere(10);
+    glPopMatrix();
+
+
+
+
+
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3f(0.2, 0.2, 0.2);
     glPushMatrix();
-    glTranslatef(20, -95.0, 0.0);
+    glTranslatef(20, -55.0, 0.0);
     DeseneazaPicior();
     glPopMatrix();
 
     glPushMatrix();
-    glRotatef(120,0,1,0);
-    glTranslatef(20, -95.0, 0.0);
+    glRotatef(120, 0, 1, 0);
+    glTranslatef(20, -50.0, 0.0);
     DeseneazaPicior();
     glPopMatrix();
 
     glPushMatrix();
     glRotatef(230, 0, 1, 0);
-    glTranslatef(20, -95.0, 0.0);
+    glTranslatef(20, -50.0, 0.0);
     DeseneazaPicior();
     glPopMatrix();
-    */
+
+    glTranslatef(-1, -70.0, 0.0);
+    glColor3f(0.7, 0.7, 0.7);
+    glRotatef(270, 1, 0, 0);
     glPushMatrix();
-    Baza();
+    auxSolidCone(20, 40);
+    glPopMatrix();
     glPopMatrix();
 
+    ///////////////////////////////////   FOC //////////////////////////////////
+
+
+
+
+    glColor3f(1.0, 0.5, 0.0);
+
+
+    glPushMatrix();
+    glTranslatef(0.0, -100.0, 0.0);
+
+
+    glRotatef(270, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+    glRotatef(200, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+    glRotatef(30, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+    glRotatef(-100, 1, 0, 0);
+    auxSolidCone(20, 40);
+
+
+
     glPopMatrix();
+
+    glFlush();
+
+    glPopMatrix();
+    glPopMatrix();
+
+}
+
+void CALLBACK Stele(void) {
+
+    glColor3f(1.0, 1.0, 0.0);
+    glPushMatrix();
+
+    glTranslatef(50.0, -100.0, 0.0);
+    auxSolidSphere(1);
+
+    glPopMatrix();
+
+    glFlush();
+
+   
+
+}
+
+
+
+
+void CALLBACK display(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    Racheta();
+    Stele();
+    
     
     glFlush();
 }
 
 void CALLBACK IdleFunction(void)
 {
-    //glRotatef(0, 0, 1, 0);
-    //display();
-    //Sleep(300);
+   glRotatef(alfa, 0, 1, 0);
+   Racheta();
+
+    Sleep(50);
+}
+
+void CALLBACK IdleFunction2(void)
+{
+  
+    glRotatef(alfa, 1, 0, 0);
+    Stele();
+    Sleep(50);
 }
 
 void CALLBACK myReshape(GLsizei w, GLsizei h)
@@ -200,7 +276,9 @@ int main(int argc, char** argv)
     myinit();
     auxKeyFunc(AUX_LEFT, MutaStanga);
     auxReshapeFunc(myReshape);
+    auxIdleFunc(IdleFunction2);
     auxIdleFunc(IdleFunction);
+    
     auxMainLoop(display);
     return(0);
 }
