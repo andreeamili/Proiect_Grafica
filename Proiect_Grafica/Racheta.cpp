@@ -19,6 +19,25 @@ void myinit(void) {
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glColor3f(0.0, 1.0, 0.0);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING); // Enable lighting
+    glEnable(GL_LIGHT0); // Enable light source 0
+
+    GLfloat light_direction[] = { 0.0, 0.0, 1.0, 0.0 }; // Direction of the light source
+    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; // Diffuse color
+    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 }; // Specular color
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_direction);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+    glShadeModel(GL_SMOOTH); // Enable smooth shading
+    glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE); // Enable local viewer mode
+    glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE); // Disable two-sided lighting
+
+    glEnable(GL_NORMALIZE); // Enable automatic normalization of normals
+    glCullFace(GL_BACK); // Enable back face culling
+    glEnable(GL_COLOR_MATERIAL);
 }
 void CALLBACK MutaStanga()
 {
@@ -95,6 +114,15 @@ void CALLBACK DeseneazaPicior()
 void CALLBACK Racheta(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    GLfloat material_diffuse[] = { 0.9, 0.9, 0.9, 1.0 }; // Diffuse color of the material
+    GLfloat material_specular[] = { 1.0, 1.0, 1.0, 1.0 }; // Specular color of the material
+    GLfloat material_shininess[] = { 50.0 }; // Shininess of the material
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, material_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, material_shininess);
+
     glPushMatrix();
     glRotatef(alfa, 0, 1, 0);
 
@@ -238,20 +266,14 @@ void CALLBACK display(void)
 }
 
 void CALLBACK IdleFunction(void)
-{
+{   
    glRotatef(alfa, 0, 1, 0);
    Racheta();
 
     Sleep(50);
 }
 
-void CALLBACK IdleFunction2(void)
-{
-  
-    glRotatef(alfa, 1, 0, 0);
-    Stele();
-    Sleep(50);
-}
+
 
 void CALLBACK myReshape(GLsizei w, GLsizei h)
 {
@@ -276,9 +298,7 @@ int main(int argc, char** argv)
     myinit();
     auxKeyFunc(AUX_LEFT, MutaStanga);
     auxReshapeFunc(myReshape);
-    auxIdleFunc(IdleFunction2);
     auxIdleFunc(IdleFunction);
-    
     auxMainLoop(display);
     return(0);
 }
