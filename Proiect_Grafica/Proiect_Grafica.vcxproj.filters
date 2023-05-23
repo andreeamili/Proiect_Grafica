@@ -18,16 +18,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="dlls\glut32.dll">
-      <Filter>dlls</Filter>
-    </None>
-    <None Include="dlls\opengl32.dll">
-      <Filter>dlls</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="dlls\glu32.dll">
       <Filter>dlls</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="dlls\glut32.dll" />
+    <CopyFileToFolders Include="dlls\opengl32.dll" />
+    <CopyFileToFolders Include="moon.bmp">
+      <Filter>Resource Files</Filter>
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>

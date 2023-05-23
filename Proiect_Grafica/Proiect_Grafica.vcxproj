@@ -157,6 +157,11 @@
   <ItemGroup>
     <ClCompile Include="Racheta.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="moon.bmp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DeploymentContent>
+    </CopyFileToFolders>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

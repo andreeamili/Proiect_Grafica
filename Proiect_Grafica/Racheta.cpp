@@ -1,4 +1,4 @@
-
+﻿
 #include "glos.h"
 #include <math.h>
 #include "gl.h"
@@ -11,6 +11,9 @@ void CALLBACK display(void);
 void CALLBACK myReshape(GLsizei w, GLsizei h);
 void CALLBACK IdleFunction(void);
 static GLfloat alfa = 10;
+static GLfloat alfa2 = 10;
+static GLfloat alfa3 = 5;
+static GLfloat alfa4 = 5;
 static GLfloat x = 0;
 static GLfloat y = 0;
 static GLfloat z = 0;
@@ -39,10 +42,6 @@ void myinit(void) {
     glEnable(GL_NORMALIZE); // Enable automatic normalization of normals
     glCullFace(GL_BACK); // Enable back face culling
     glEnable(GL_COLOR_MATERIAL);
-}
-void CALLBACK MutaStanga()
-{
-    x = x + 10;
 }
 
 void CALLBACK DeseneazaPicior()
@@ -226,40 +225,64 @@ void CALLBACK Racheta(void)
 
 
 
-void CALLBACK Stele(void) {
+void CALLBACK Planeta(void) {
 
-    glColor3f(1.0, 1.0, 0.0);
+   
     glPushMatrix();
 
-    glTranslatef(50.0, -100.0, 0.0);
-    auxSolidSphere(1);
+    
+   
 
     glPopMatrix();
 
     glFlush();
-
-   
-
 }
-
-
-
 
 void CALLBACK display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    glPushMatrix();
+    glRotatef(alfa, 0, 1, 0);
     Racheta();
-    Stele();
-    
+    glPopMatrix();
+
+
+    glPushMatrix();
+    glRotatef(alfa2, 1, 0, 1);
+    glColor3f(0.6f, 0.4f, 0.3f);
+    glTranslatef(-300.0, -60.0, -20.0);
+    auxSolidSphere(150);
+    glPopMatrix();
+
+   
+
+    glPushMatrix();
+    glRotatef(alfa4, 1, 1, 1);
+    glColor3f(0.0f, 0.39f, 0.26f);
+    glTranslatef(-400.0, -30.0, 0.0);
+    auxSolidSphere(90);
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(alfa3, 0, 1, 1);
+    glColor3f(0.5f, 0.4f, 0.3f);
+    glTranslatef(-350.0, -30.0, 0.0);
+    auxSolidSphere(90);
+    glPopMatrix();
+
     
     glFlush();
 }
 
+
 void CALLBACK IdleFunction(void)
 {   
-   glRotatef(alfa, 0, 1, 0);
-   Racheta();
+    alfa += 1.0f;
+    alfa2 -= 2.0f;
+    alfa3 -= 2.0f;
+    alfa4 -= 2.0f;
+
+   display();
 
     Sleep(50);
 }
@@ -274,10 +297,10 @@ void CALLBACK myReshape(GLsizei w, GLsizei h)
     glLoadIdentity();
     if (w <= h)
         glOrtho(-160.0, 160.0, -160.0 * (GLfloat)h / (GLfloat)w,
-            160.0 * (GLfloat)h / (GLfloat)w, -200.0, 200.0);
+            160.0 * (GLfloat)h / (GLfloat)w, -800.0, 800.0);
     else
         glOrtho(-160.0 * (GLfloat)w / (GLfloat)h,
-            160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -200.0, 200.0);
+            160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -800.0, 800.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -287,7 +310,6 @@ int main(int argc, char** argv)
     auxInitPosition(0, 0, 900, 600);
     auxInitWindow("Racheta");
     myinit();
-    auxKeyFunc(AUX_LEFT, MutaStanga);
     auxReshapeFunc(myReshape);
     auxIdleFunc(IdleFunction);
     auxMainLoop(display);
